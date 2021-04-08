@@ -25,7 +25,6 @@ class HandleRequests(BaseHTTPRequestHandler):
             pass  # No route parameter exists: /animals
         except ValueError:
             pass  # Request had trailing slash: /animals/
-
         return (resource, id)  # This is a tuple
 
     # Here's a class function
