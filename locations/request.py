@@ -2,8 +2,7 @@ LOCATIONS = [
     {
         "id": 1,
         "name": "Nashville North",
-        "address": "8422 Johnson Pike",
-        "employeeId": null
+        "address": "8422 Johnson Pike"
     },
     {
         "id": 2,
