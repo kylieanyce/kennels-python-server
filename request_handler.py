@@ -1,6 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from animals import get_all_animals, get_single_animal
+from animals import get_all_animals
+from animals import get_single_animal
+
 
 # Here's a class. It inherits from another class.
 # For now, think of a class as a container for functions that
