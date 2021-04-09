@@ -1,3 +1,4 @@
+from customers.request import get_all_customers, get_single_customer
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from animals import get_all_animals
 from animals import get_single_animal
@@ -5,6 +6,8 @@ from locations import get_all_locations
 from locations import get_single_location
 from employees import get_all_employees
 from employees import get_single_employee
+from customers import get_all_customers
+from customers import get_single_customer
 
 
 # Here's a class. It inherits from another class.
@@ -60,7 +63,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL and capture the tuple that is returned
         (resource, id) = self.parse_url(self.path)
         
-        # It's an if..else statement
+        # ANIMALS
         if resource == "animals":
             # In Python, this is a list of dictionaries
             # In JavaScript, you would call it an array of objects
@@ -73,7 +76,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         # This weird code sends a response back to the client
         self.wfile.write(response.encode())
 
-
+        # LOCATIONS
         if resource == "locations":
             if id is not None:
                 response = f"{get_single_location(id)}"
@@ -82,7 +85,7 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = f"{get_all_locations()}"
         self.wfile.write(response.encode())
         
-
+        # EMPLOYEES
         if resource == "employees":
             if id is not None:
                 response = f"{get_single_employee(id)}"
@@ -90,6 +93,16 @@ class HandleRequests(BaseHTTPRequestHandler):
             else:
                 response = f"{get_all_employees()}"
         self.wfile.write(response.encode())
+        
+        # CUSTOMERS
+        if resource == "customers":
+            if id is not None:
+                response = f"{get_single_customer(id)}"
+
+            else:
+                response = f"{get_all_customers()}"
+        self.wfile.write(response.encode())
+
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any POST request.
