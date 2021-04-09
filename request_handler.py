@@ -17,6 +17,7 @@ from employees import create_employee
 
 from customers import get_all_customers
 from customers import get_single_customer
+from customers import create_customer
 
 
 # Here's a class. It inherits from another class.
@@ -126,6 +127,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         new_animal = None
         new_location = None
         new_employee = None
+        new_customer = None
 
 
         # Add a new animal to the list. Don't worry about
@@ -140,6 +142,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == "employees":
             new_employee = create_employee(post_body)
             self.wfile.write(f"{new_employee}".encode())
+        if resource == "customers":
+            new_customer = create_customer(post_body)
+            self.wfile.write(f"{new_customer}".encode())
 
         # Encode the new animal and send in response
 
