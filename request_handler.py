@@ -10,14 +10,17 @@ from animals import delete_animal
 from locations import get_all_locations
 from locations import get_single_location
 from locations import create_location
+from locations import delete_location
 
 from employees import get_all_employees
 from employees import get_single_employee
 from employees import create_employee
+from employees import delete_employee
 
 from customers import get_all_customers
 from customers import get_single_customer
 from customers import create_customer
+from customers import delete_customer
 
 
 # Here's a class. It inherits from another class.
@@ -123,16 +126,11 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Initialize new animal
         new_animal = None
         new_location = None
         new_employee = None
         new_customer = None
 
-
-        # Add a new animal to the list. Don't worry about
-        # the orange squiggle, you'll define the create_animal
-        # function next.
         if resource == "animals":
             new_animal = create_animal(post_body)
             self.wfile.write(f"{new_animal}".encode())
@@ -146,26 +144,25 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_customer = create_customer(post_body)
             self.wfile.write(f"{new_customer}".encode())
 
-        # Encode the new animal and send in response
-
     # Here's a method on the class that overrides the parent's method.
     # It handles any PUT request.
-
     def do_PUT(self):
         self.do_POST()
 
-    def do_DELETE(self):
-        # Set a 204 response code
-        self._set_headers(204)
 
-        # Parse the URL
+    def do_DELETE(self):
+        self._set_headers(204)
         (resource, id) = self.parse_url(self.path)
 
         # Delete a single animal from the list
         if resource == "animals":
             delete_animal(id)
-
-        # Encode the new animal and send in response
+        if resource == "locations":
+            delete_location(id)
+        if resource == "employees":
+            delete_employee(id)
+        if resource == "customers":
+            delete_customer(id)
         self.wfile.write("".encode())
 
 # This function is not inside the class. It is the starting
