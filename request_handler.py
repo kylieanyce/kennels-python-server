@@ -63,7 +63,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL and capture the tuple that is returned
         (resource, id) = self.parse_url(self.path)
         
-        # ANIMALS
+        # ANIMALS -------------------------------------------------
         if resource == "animals":
             # In Python, this is a list of dictionaries
             # In JavaScript, you would call it an array of objects
@@ -73,34 +73,30 @@ class HandleRequests(BaseHTTPRequestHandler):
             else:
                 response = f"{get_all_animals()}"
 
-        # This weird code sends a response back to the client
-        self.wfile.write(response.encode())
-
-        # LOCATIONS
+        # LOCATIONS -----------------------------------------------
         if resource == "locations":
             if id is not None:
                 response = f"{get_single_location(id)}"
 
             else:
                 response = f"{get_all_locations()}"
-        self.wfile.write(response.encode())
         
-        # EMPLOYEES
+        # EMPLOYEES ------------------------------------------------
         if resource == "employees":
             if id is not None:
                 response = f"{get_single_employee(id)}"
 
             else:
                 response = f"{get_all_employees()}"
-        self.wfile.write(response.encode())
         
-        # CUSTOMERS
+        # CUSTOMERS -----------------------------------------------
         if resource == "customers":
             if id is not None:
                 response = f"{get_single_customer(id)}"
 
             else:
                 response = f"{get_all_customers()}"
+
         self.wfile.write(response.encode())
 
 
