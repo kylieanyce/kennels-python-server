@@ -2,26 +2,26 @@ EMPLOYEES = [
     {
         "id": 1,
         "name": "Teresa May",
-        "locationId": 3
+        "location_id": 3
     },
     {
         "id": 2,
         "name": "Meriweather Pavillion",
-        "locationId": 2
+        "location_id": 2
     },
     {
         "id": 3,
         "name": "Geri Mander",
-        "locationId": 2
+        "location_id": 2
     },
     {
         "id": 4,
         "name": "Amanda Blevy",
-        "locationId": 1
+        "location_id": 1
     },
     {
         "name": "Marge Barge",
-        "locationId": 3,
+        "location_id": 3,
         "id": 5
     }
 ]

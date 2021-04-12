@@ -3,31 +3,31 @@ ANIMALS = [
       "id": 2,
       "name": "Kit",
       "breed": "Pit",
-      "customerId": 2,
-      "locationId": 1,
+      "customer_id": 2,
+      "location_id": 1,
       "status": "Admitted"
     },
     {
       "id": 3,
       "name": "Clown",
       "breed": "Hound-Mix",
-      "locationId": 2,
-      "customerId": 3,
+      "location_id": 2,
+      "customer_id": 3,
       "status": "Admitted"
     },
     {
       "id": 4,
       "name": "Buddy",
       "breed": "Terrier",
-      "customerId": 4,
-      "locationId": 1,
+      "customer_id": 4,
+      "location_id": 1,
       "status": "Admitted"
     },
     {
       "name": "Boogie",
       "breed": "Weiner",
-      "locationId": 2,
-      "customerId": 4,
+      "location_id": 2,
+      "customer_id": 4,
       "status": "Admitted",
       "id": 5
     }
