@@ -1,6 +1,8 @@
 class Employee():
 
-    def __init__(self, id, name, location):
+    def __init__(self, id, name, address, email, location):
         self.id = id
         self.name = name
-        self.location = location
+        self.address = address
+        self.email = email
+        self.location_id = location
