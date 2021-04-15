@@ -69,5 +69,4 @@ SELECT
 FROM animal a
 WHERE a.id = 3
 
-DROP TABLE IF EXISTS Customer
-SELECT * FROM Customer
+SELECT * FROM Employee

@@ -1,34 +1,7 @@
 import sqlite3
 import json
-from models import Employee
+from models import Employee, employee
 
-EMPLOYEES = [
-    {
-        "id": 1,
-        "name": "Teresa May",
-        "location_id": 3
-    },
-    {
-        "id": 2,
-        "name": "Meriweather Pavillion",
-        "location_id": 2
-    },
-    {
-        "id": 3,
-        "name": "Geri Mander",
-        "location_id": 2
-    },
-    {
-        "id": 4,
-        "name": "Amanda Blevy",
-        "location_id": 1
-    },
-    {
-        "name": "Marge Barge",
-        "location_id": 3,
-        "id": 5
-    }
-]
 
 def get_all_employees():
     with sqlite3.connect("./kennel.db") as conn:
@@ -43,13 +16,14 @@ def get_all_employees():
             e.location_id
         FROM employee e
         """)
-
         employees = []
         dataset = db_cursor.fetchall()
         for row in dataset:
-            employee = Employee(row['id'], row['name'], row['address'], row['email'], row['location_id'])
+            employee = Employee(
+                row['id'], row['name'], row['address'], row['email'], row['location_id'])
             employees.append(employee.__dict__)
     return json.dumps(employees)
+
 
 def get_single_employee(id):
     with sqlite3.connect("./kennel.db") as conn:
@@ -65,12 +39,35 @@ def get_single_employee(id):
             e.location_id
         FROM employee e
         WHERE e.id = ?
-        """, ( id, ))
-
+        """, (id, ))
         data = db_cursor.fetchone()
         employee = Employee(data['id'], data['name'], data['address'],
                             data['email'], data['location_id'])
         return json.dumps(employee.__dict__)
+
+
+def get_employees_by_location(location):
+    with sqlite3.connect("./kennel.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        SELECT
+            e.id,
+            e.name,
+            e.address,
+            e.email,
+            e.location_id
+        FROM employee e
+        WHERE e.location_id = ?
+        """, (location, ))
+        employees = []
+        dataset = db_cursor.fetchall()
+        for row in dataset:
+            employee = Employee(
+                row['id'], row['name'], row['address'], row['email'], row['location_id'])
+            employees.append(employee.__dict__)
+    return json.dumps(employees)
 
 
 def create_employee(employee):
@@ -88,6 +85,7 @@ def delete_employee(id):
             employee_index = index
     if employee_index >= 0:
         EMPLOYEES.pop(employee_index)
+
 
 def update_employee(id, new_employee):
     # Iterate the ANIMALS list, but use enumerate() so that

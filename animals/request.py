@@ -2,41 +2,6 @@ import sqlite3
 import json
 from models import Animal
 
-ANIMALS = [
-    {
-      "id": 2,
-      "name": "Kit",
-      "breed": "Pit",
-      "customer_id": 2,
-      "location_id": 1,
-      "status": "Admitted"
-    },
-    {
-      "id": 3,
-      "name": "Clown",
-      "breed": "Hound-Mix",
-      "location_id": 2,
-      "customer_id": 3,
-      "status": "Admitted"
-    },
-    {
-      "id": 4,
-      "name": "Buddy",
-      "breed": "Terrier",
-      "customer_id": 4,
-      "location_id": 1,
-      "status": "Admitted"
-    },
-    {
-      "name": "Boogie",
-      "breed": "Weiner",
-      "location_id": 2,
-      "customer_id": 4,
-      "status": "Admitted",
-      "id": 5
-    }
-]
-
 
 def get_all_animals():
     # Open a connection to the database
@@ -79,6 +44,7 @@ def get_all_animals():
 
     # Use `json` package to properly serialize list as JSON
     return json.dumps(animals)
+
 
 def get_single_animal(id):
     with sqlite3.connect("./kennel.db") as conn:
@@ -136,6 +102,32 @@ def get_animals_by_location(location):
     return json.dumps(animals)
 
 
+def get_animals_by_status(status):
+    with sqlite3.connect("./kennel.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+        # Write the SQL query to get the information you want
+        db_cursor.execute("""
+        select
+            a.id,
+            a.name,
+            a.breed,
+            a.status,
+            a.location_id,
+            a.customer_id
+        from Animal a
+        WHERE a.status = ?
+        """, ( status, ))
+        animals = []
+        dataset = db_cursor.fetchall()
+        for row in dataset:
+            animal = Animal(row['id'], row['name'], row['breed'],
+                            row['status'], row['location_id'],
+                            row['customer_id'])
+            animals.append(animal.__dict__)
+    return json.dumps(animals)
+
+
 def create_animal(animal):
     # Get the id value of the last animal in the list
     max_id = ANIMALS[-1]["id"]
@@ -152,6 +144,7 @@ def create_animal(animal):
     # Return the dictionary with `id` property added
     return animal
 
+
 def delete_animal(id):
     # Initial -1 value for animal index, in case one isn't found
     animal_index = -1
@@ -166,6 +159,7 @@ def delete_animal(id):
     # If the animal was found, use pop(int) to remove it from list
     if animal_index >= 0:
         ANIMALS.pop(animal_index)
+
 
 def update_animal(id, new_animal):
     # Iterate the ANIMALS list, but use enumerate() so that

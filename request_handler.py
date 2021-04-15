@@ -8,6 +8,7 @@ from animals import create_animal
 from animals import delete_animal
 from animals import update_animal
 from animals import get_animals_by_location
+from animals import get_animals_by_status
 
 from locations import get_all_locations
 from locations import get_single_location
@@ -20,6 +21,7 @@ from employees import get_single_employee
 from employees import create_employee
 from employees import delete_employee
 from employees import update_employee
+from employees import get_employees_by_location
 
 from customers import get_all_customers
 from customers import get_single_customer
@@ -100,6 +102,16 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_customer(id)}"
                 else:
                     response = f"{get_all_customers()}"
+            elif resource == "locations":
+                if id is not None:
+                    response = f"{get_single_location(id)}"
+                else:
+                    response = f"{get_all_locations()}"
+            elif resource == "employees":
+                if id is not None:
+                    response = f"{get_single_employee(id)}"
+                else:
+                    response = f"{get_all_employees()}"
         # Response from parse_url() is a tuple with 3
         # items in it, which means the request was for
         # `/resource?parameter=value`
@@ -112,58 +124,12 @@ class HandleRequests(BaseHTTPRequestHandler):
                 response = get_customers_by_email(value)
             elif key == "location_id" and resource == "animals":
                 response = get_animals_by_location(value)
+            elif key == "location_id" and resource == "employees":
+                response = get_employees_by_location(value)
+            elif key == "status" and resource == "animals":
+                response = get_animals_by_status(value)
         self.wfile.write(response.encode())
 
-
-    # def do_GET(self):
-    #     # Set the response code to 'Ok'
-    #     self._set_headers(200)
-    #     response = {}  # Default response
-
-    #     # Your new console.log() that outputs to the terminal
-    #     print(self.path)
-
-    #     # Parse the URL and capture the tuple that is returned
-    #     (resource, id) = self.parse_url(self.path)
-
-    #     # ANIMALS -------------------------------------------------
-    #     if resource == "animals":
-    #         # In Python, this is a list of dictionaries
-    #         # In JavaScript, you would call it an array of objects
-    #         if id is not None:
-    #             response = f"{get_single_animal(id)}"
-
-    #         else:
-    #             response = f"{get_all_animals()}"
-
-    #     # LOCATIONS -----------------------------------------------
-    #     if resource == "locations":
-    #         if id is not None:
-    #             response = f"{get_single_location(id)}"
-
-    #         else:
-    #             response = f"{get_all_locations()}"
-
-    #     # EMPLOYEES ------------------------------------------------
-    #     if resource == "employees":
-    #         if id is not None:
-    #             response = f"{get_single_employee(id)}"
-
-    #         else:
-    #             response = f"{get_all_employees()}"
-
-    #     # CUSTOMERS -----------------------------------------------
-    #     if resource == "customers":
-    #         if id is not None:
-    #             response = f"{get_single_customer(id)}"
-
-    #         else:
-    #             response = f"{get_all_customers()}"
-
-    #     self.wfile.write(response.encode())
-
-    # Here's a method on the class that overrides the parent's method.
-    # It handles any POST request.
 
     def do_POST(self):
         self._set_headers(201)
