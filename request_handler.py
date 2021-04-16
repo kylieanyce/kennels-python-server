@@ -170,10 +170,10 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
-
+        success = False
         # Delete a single animal from the list
         if resource == "animals":
-            update_animal(id, post_body)
+            success = update_animal(id, post_body)
         if resource == "locations":
             update_location(id, post_body)
         if resource == "employees":
