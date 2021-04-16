@@ -69,4 +69,5 @@ SELECT
 FROM animal a
 WHERE a.id = 3
 
-SELECT * FROM Employee
+SELECT * FROM Animal
+INSERT INTO `Animal` VALUES (null, "Daps", "Kennel", "Boxer", 2, 2);
