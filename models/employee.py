@@ -6,3 +6,4 @@ class Employee():
         self.address = address
         self.email = email
         self.location_id = location
+        self.location = None
