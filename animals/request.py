@@ -42,7 +42,6 @@ def get_all_animals():
             # Animal class above.
             animal = Animal(row['id'], row['name'], row['breed'], row['status'],
                             row['location_id'], row['customer_id'])
-
             # Create a Location instance from the current row
             location = Location(row['id'], row['location_name'], row['location_address'])
             customer = Customer(row['id'], row['customer_name'], row['customer_address'])

@@ -1,5 +1,4 @@
 import json
-# from customers.request import get_all_customers, get_single_customer
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from animals import get_all_animals
@@ -31,10 +30,7 @@ from customers import update_customer
 from customers import get_customers_by_email
 
 
-# Here's a class. It inherits from another class.
-# For now, think of a class as a container for functions that
-# work together for a common purpose. In this case, that
-# common purpose is to respond to HTTP requests from a client.
+
 class HandleRequests(BaseHTTPRequestHandler):
     def parse_url(self, path):
         path_params = path.split("/")
@@ -42,8 +38,6 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         # Check if there is a query string parameter
         if "?" in resource:
-            # GIVEN: /customers?email=jenna@solis.com
-
             param = resource.split("?")[1]  # email=jenna@solis.com
             resource = resource.split("?")[0]  # 'customers'
             pair = param.split("=")  # [ 'email', 'jenna@solis.com' ]
@@ -199,9 +193,11 @@ class HandleRequests(BaseHTTPRequestHandler):
             delete_customer(id)
         self.wfile.write("".encode())
 
+
+
+
 # This function is not inside the class. It is the starting
 # point of this application.
-
 
 def main():
     host = ''
